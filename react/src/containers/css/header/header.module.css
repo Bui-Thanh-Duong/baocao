@@ -1,0 +1,115 @@
+/* General Header Container */
+.headerContainer {
+    z-index: 3;
+    position: relative;
+  }
+.logo {
+  color: #fff; 
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: #fff; 
+  text-decoration: none; 
+}
+
+.logo h1 {
+  margin: 0; 
+}
+
+  
+  /* Header background color */
+  .headerColor {
+    background-color: var(--deep-green);
+  }
+  
+  /* Search Input Styling */
+  .searchInput {
+    border-radius: 0.25rem !important;
+    height: 4rem !important;
+    width: 30rem !important;
+    font-size: 1.8rem !important;
+    border-top-left-radius: 2.5rem !important;
+    border-bottom-left-radius: 2.5rem !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  
+  /* Search Button Styling */
+  .searchBtn {
+    font-size: 1.8rem !important;
+    width: auto;
+  }
+  
+  .searchBtn:hover, .loginBtn:hover, .cartBtn:hover {
+    color: var(--deep-green);
+  }
+  
+  /* Cart Button Margin */
+  .cartMargin {
+    margin-right: 20rem;
+  }
+  
+  /* Cart Button Styling */
+  .cartBtn {
+    font-size: 1.8rem;
+  }
+  
+  .cartBtn > i {
+    font-size: 1.8rem;
+  }
+  
+  /* Login Button Styling */
+  .loginBtn {
+    font-size: 1.8rem !important;
+  }
+  
+  /* Button Toggler for mobile view */
+  .btnToggler {
+    color: var(--pure-white);
+    border: solid 0.2rem;
+    font-size: 1.8rem;
+  }
+  
+  /* Media Queries for smaller screens */
+  @media (max-width: 992px) {
+    .cartMargin {
+      margin: 1rem 0 0 0 !important;
+    }
+  }
+  
+  /* Logout Button Styling */
+  .logoutBtn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  
+  .logoutBtn {
+    background-color: #ff6347;
+    padding: 1rem;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+  /* Header Info Section */
+  .headerInfor {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  /* User Greeting Section */
+  .headerHiUser {
+    margin-right: 2rem !important;
+  }
+  
+  /* User Greeting Link Styling */
+  .headerHiUser span {
+    font-weight: bold  !important;
+    font-size: 1.8rem  !important;
+    color: #fff !important;
+    text-decoration: none  !important;
+  }
+  

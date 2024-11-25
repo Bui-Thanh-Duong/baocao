@@ -29,9 +29,8 @@ function Menu({ list }) {
 function Header() {
     const list = [
         { url: '/', text: 'Home' },
-        { url: '/login', text: 'Login' },
-        { url: '/hello', text: 'Hello' },
-        { url: '/car', text: 'Car' }
+        { url: '/users', text: 'Users' },
+        { url: '/login', text: 'Login' }
     ];
 
     return (
