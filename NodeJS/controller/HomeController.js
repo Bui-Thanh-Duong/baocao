@@ -24,7 +24,7 @@ const getHomePage = async (req, res) => {
 };
 
 const getHello = async (req, res) => {
-    return res.send({ message: "Tên của tôi là BARO" });
+    return res.send({ message: "Hello Baro!" });
 };
 
 

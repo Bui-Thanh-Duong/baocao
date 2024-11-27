@@ -8,7 +8,6 @@ const ProductList = () => {
   const [sonthoi, setsonthoi] = useState([]);
   const [sonduong, setsonduong] = useState([]);
   const [sonbong, setsonbong] = useState([]);
-  const [helloMessage, setHelloMessage] = useState(''); 
 
   useEffect(() => {
     // Fetch data for "SẢN PHẨM MỚI"
@@ -54,22 +53,8 @@ const ProductList = () => {
     ));
   };
 
-  const handleHelloClick = async () => {
-      const response = await axios.get('http://localhost:3000/api/v1/hello');
-      setHelloMessage(response.data.message);
-  };
-
   return (
     <div>
-      {/* Hello Link */}
-      <Link
-        className={`nav-link ${styles['menu-link']} active`}
-        to="#"
-        onClick={handleHelloClick} 
-      >
-        <h1>Hello {helloMessage && <h1>{helloMessage}</h1>}</h1>
-      </Link>
-
       {/* SẢN PHẨM MỚI */}
       <div className={styles.productContainer}>
         <div className={styles.productTitle}>SẢN PHẨM MỚI</div>

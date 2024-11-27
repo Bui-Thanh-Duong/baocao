@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
 import styles from '../css/header/header.module.css';
-import HeaderBanner from './headerBanner';
 import { Link } from 'react-router-dom';
-import { Context } from './Context'; // Import context để lấy thông tin user
+import { Context } from './Context';
 import { logout } from './userService';
+import axios from 'axios';
 
 
 const Header = () => {
   const [searchInput, setSearchInput] = useState('');
   const { user, logoutContext } = useContext(Context);
+  const [helloMessage, setHelloMessage] = useState(''); 
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -17,22 +18,22 @@ const Header = () => {
 
   const handleLogout = async (e) => {
     e.preventDefault();  // Prevent default action
-    console.log("Logout function triggered!"); // Check if it is being called
-    try {
+    console.log("Logout function triggered!");
       await logout();  // Gọi API logout
-      logoutContext();  // Cập nhật context và localStorage sau khi logout thành công
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+      logoutContext();
+  };
+
+  const handleHelloClick = async () => {
+    const response = await axios.get('http://localhost:3000/api/v1/hello');
+    setHelloMessage(response.data.message);
   };
 
   return (
     <div className={`${styles.headerContainer}`}>
-      <HeaderBanner />
       <nav className={`${styles.headerColor} navbar navbar-expand-lg`}>
         <div className="mr-5 px-5">
-          <Link to="/" className={`${styles.logo}`}>
-            <h1> Welcome Natural Lipstick</h1>
+          <Link to="/" className={`${styles.logo}`} onClick={handleHelloClick} >
+            <h1>Natural Lipstick {helloMessage && <span>{helloMessage}</span>}</h1>
           </Link>
         </div>
         <button
