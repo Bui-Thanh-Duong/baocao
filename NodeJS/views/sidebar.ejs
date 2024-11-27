@@ -1,0 +1,61 @@
+<div class="container-fluid d-flex">
+
+    <div class="sidebar">
+        <h4 class="text-center">Natural Lipstick</h4>
+        <div class="text-center my-4">
+            <img src="https://via.placeholder.com/60" alt="Avatar" class="admin-avatar">
+            <p class="mt-2">Quản trị viên</p>
+        </div>
+
+        <!-- Navigation Items -->
+        <ul class="nav flex-column">
+           
+            <li class="nav-item">
+                <a class="nav-link" href="#">Quản lý sản phẩm</a>
+                <ul class="nav flex-column submenu">
+                    <li class="nav-item"><a class="nav-link" href="/insertproduct">Thêm sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/listproduct">Cập nhật sản phẩm</a></li>
+                </ul>
+            </li>
+           
+           
+            <li class="nav-item">
+                <a class="nav-link" href="#">Quản lý loại</a>
+                <ul class="nav flex-column submenu">
+                    <li class="nav-item"><a class="nav-link" href="/insertcategory">Thêm loại</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/listcategory">Cập nhật loại</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Quản lý tài khoản</a>
+                <ul class="nav flex-column submenu">
+                    <li class="nav-item"><a class="nav-link" href="/getUser">Cập nhật tài khoản</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/createnewuser">Cấp tài khoản</a></li>
+                </ul>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link text-danger" href="/logout">Đăng xuất</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <script>
+        // Lắng nghe sự kiện click vào phần tử nav-item
+        document.querySelectorAll('.nav-item > .nav-link').forEach(item => {
+            item.addEventListener('click', function (event) {
+                // Kiểm tra xem mục có submenu hay không
+                const submenu = this.nextElementSibling;
+
+                // Nếu có submenu, ngừng hành động mặc định và toggle submenu
+                if (submenu && submenu.classList.contains('submenu')) {
+                    event.preventDefault();  // Ngừng hành động mặc định chỉ khi có submenu
+                    const parentItem = this.parentElement;
+                    parentItem.classList.toggle('active');
+                }
+            });
+        });
+
+    </script>

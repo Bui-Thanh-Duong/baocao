@@ -1,0 +1,46 @@
+<div class="content">
+    <h2 class="mb-4">CẬP NHẬT LOẠI</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% if (data.rows && data.rows.length > 0) { %>
+                <% data.rows.forEach((category, index) => { %>
+                <tr>
+                    <td><%= (data.currentPage - 1) * 5 + index + 1 %></td>
+                    <td><%= category.ten %></td>
+                    <td><a href="/editcategory/<%= category.idnhom %>" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Sửa</a></td>
+                    <td>
+                      <form action="/deletecategory" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">
+                        <input type="hidden" name="idnhom" value="<%= category.idnhom %>" />
+                        <button class="btn btn-danger" type="submit"><i class="bi bi-trash"></i> Xóa</button>
+                      </form>
+                    </td>
+                </tr>
+                <% }) %>
+                <% } else { %> 
+                  <tr><td colspan="7">Không có loại sản phẩm nào được tìm thấy.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+  
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            <% for (let i = 1; i <= data.totalPages; i++) { %>
+              <li class="page-item <%= i === data.currentPage ? 'active' : '' %>">
+                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+              </li>
+            <% } %>
+        </ul>
+    </nav>
+  </div>
+  

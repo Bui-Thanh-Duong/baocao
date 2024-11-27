@@ -1,0 +1,182 @@
+/* Product container */
+.productContainer {
+  width: 95%;
+  background-color: var(--bright-white);
+  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+
+/* Product list styles */
+.productListItems {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  background-color: var(--bright-white);
+  padding: 1rem 1rem 2rem 1rem;
+  text-align: center;
+  gap: 2.5rem;
+}
+
+/* Title of the product list */
+.productListTitle {
+  margin-top: 1rem;
+  display: flex;
+  font-weight: bold;
+  font-size: 2.5rem;
+  padding: 2rem;
+  height: 3rem;
+  justify-content: center;
+  align-items: center;
+  color: var(--deep-green);
+  background-color: var(--bright-white);
+}
+
+/* Title styles for special products */
+.productListTitleSpecial {
+  color: var(--secondary-color);
+  background-color: var(--deep-green);
+}
+
+/* Product item styles */
+/* Điều chỉnh khoảng cách giữa các sản phẩm */
+.productListProduct {
+  padding-bottom: 2rem; /* Thêm khoảng cách dưới mỗi sản phẩm */
+  margin: 0 auto; /* Center align the product cards */
+  background-color: var(--bright-white);
+  overflow: hidden;
+  position: relative;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+/* Hover styles for special products */
+.productListProductSpecial {
+  border-color: var(--deep-green);
+}
+
+.productListProductHover {
+  border: 0.1rem solid var(--deep-green);
+}
+
+/* Product image styles */
+.productImg {
+  width: 100%;
+  height: 25rem;
+  object-fit: cover; /* Ensures the image does not stretch */
+  transition: transform 0.3s ease-in-out; /* Adds smooth transition for scaling */
+}
+
+/* Overlay styles when hovering over product */
+.productImgOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effect for product image */
+.productListProduct:hover .productImgOverlay {
+  opacity: 1; /* Show overlay when hovered */
+}
+
+.productHoverIcons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease;
+}
+
+.productListProduct:hover .productHoverIcons {
+  opacity: 1; /* Show hover icons when hovered */
+}
+
+/* Icons inside the hover overlay */
+.productHoverIcons .fas {
+  margin: 0 1rem;
+  color: var(--bright-white);
+  font-size: 24px;
+}
+
+.productHoverIcons .fas:hover {
+  transform: scale(1.2); /* Scales the icon on hover */
+}
+
+/* Product link styles */
+.productListProductLink {
+  text-decoration: none !important; /* Ensure no underline */
+}
+
+/* Product name style */
+.productListProductLinkH2 {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--deep-green);
+  text-decoration: none !important; /* Remove underline even on hover */
+}
+
+/* Product price container */
+.productPrice {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  padding: 1rem 1.5rem;
+  flex-direction: column;
+}
+
+/* Discount price style */
+.discountPrice {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border: 0.2rem solid var(--primary-color);
+  border-radius: 2rem;
+  box-shadow: 0px 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
+  background-color: #ff6f61;
+  color: white;
+  text-decoration: none !important; /* Remove underline on discount price */
+}
+
+/* Original price style */
+.originalPrice {
+  text-decoration: line-through;
+  color: #888888;
+}
+
+/* Pagination styles */
+.productListPagination {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.productListPaginationLink {
+  color: black;
+  font-size: 15px;
+  padding: 5px 10px;
+  text-decoration: none !important; /* Ensure no underline */
+  margin: 2px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.productListPaginationLinkHover {
+  background-color: #f2f2f2;
+}
+
+.productListPaginationLink.active {
+  background-color: var(--deep-green);
+  color: white;
+}

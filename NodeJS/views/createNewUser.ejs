@@ -1,0 +1,42 @@
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Cấp tài khoản</h3>
+                    <form action="/createnewuser" method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Tên đăng nhập:</label>
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Nhập tên đăng nhập" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mật khẩu:</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Nhập mật khẩu" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Họ và tên:</label>
+                            <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Nhập họ và tên" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Địa chỉ:</label>
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Nhập địa chỉ" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sex" class="form-label">Giới tính:</label>
+                            <select id="sex" name="sex" class="form-select" required>
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Nhập Email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Tạo người dùng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

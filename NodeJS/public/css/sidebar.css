@@ -1,0 +1,96 @@
+/* sidebar.css */
+
+/* Style for the sidebar */
+.sidebar {
+    width: 250px;
+    padding: 20px;
+    background-color: #faecf3; /* Màu hồng phấn dịu dàng */
+    border-right: 2px solid #d291bc; /* Màu hồng tím sang trọng */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+.admin-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #d291bc; /* Viền tím nhẹ */
+    margin: 10px auto;
+    display: block;
+}
+
+/* Ẩn các mục con mặc định */
+.submenu {
+    display: none;
+}
+
+/* Loại bỏ dấu chấm đầu dòng trong danh sách */
+.nav-item ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+li {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Hiển thị menu khi được thêm class active */
+.nav-item.active .submenu {
+    display: block;
+}
+
+/* Thiết lập màu chữ và hiệu ứng cho link */
+.nav-link {
+    color: #993366 !important; /* Màu tím hồng nhẹ */
+    font-weight: bold;
+    text-decoration: none !important;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #d291bc; /* Hiệu ứng màu tím sáng khi hover */
+    color: #fff !important; /* Chữ trắng nổi bật */
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng nổi */
+}
+
+/* Từng mục trong menu */
+.nav-item {
+    margin-bottom: 10px;
+}
+
+/* Flex container để căn ngang giữa sidebar và content */
+.container-fluid {
+    display: flex;
+    background: linear-gradient(135deg, #fdeff4, #ffffff); /* Nền trang nhẹ nhàng */
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    color: #333;
+    border-left: 1px solid #f0c4e0;
+}
+
+/* Tinh chỉnh kiểu chữ */
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4a4a4a;
+}
+
+/* Thay đổi màu cho nút đăng xuất */
+.nav-link.text-danger {
+    color: #e63946 !important; /* Màu đỏ đậm */
+    background: #ffccd5; /* Nền đỏ hồng nhạt */
+    border-radius: 5px;
+}
+
+.nav-link.text-danger:hover {
+    background: #e63946; /* Nền đỏ đậm hơn khi hover */
+    color: #fff !important;
+}

@@ -1,0 +1,46 @@
+<div class="content">
+    <h2 class="mb-4">CẬP NHẬT SẢN PHẨM</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên</th>
+                    <th>Sửa</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% if (data.rows && data.rows.length > 0) { %>
+                <% data.rows.forEach((product, index) => { %>
+                <tr>
+                    <td><%= (data.currentPage - 1) * 5 + index + 1 %></td>
+                    <td><%= product.ten %></td>
+                    <td><a href="/editproduct/<%= product.masp %>" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Sửa</a></td>
+                    <td>
+                      <form action="/deleteproduct" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">
+                        <input type="hidden" name="masp" value="<%= product.masp %>" />
+                        <button class="btn btn-danger" type="submit"><i class="bi bi-trash"></i> Xóa</button>
+                      </form>
+                    </td>
+                </tr>
+                <% }) %>
+                <% } else { %> 
+                  <tr><td colspan="7">Không có sản phẩm nào được tìm thấy.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+  
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            <% for (let i = 1; i <= data.totalPages; i++) { %>
+              <li class="page-item <%= i === data.currentPage ? 'active' : '' %>">
+                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+              </li>
+            <% } %>
+        </ul>
+    </nav>
+  </div>
+  

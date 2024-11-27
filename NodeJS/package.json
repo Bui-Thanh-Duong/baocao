@@ -1,0 +1,33 @@
+{
+  "name": "buoi1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-redis": "^7.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.20.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.3",
+    "nodemon": "^3.1.4",
+    "redis": "^4.7.0",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/node": "^7.25.0",
+    "@babel/preset-env": "^7.25.4"
+  }
+}

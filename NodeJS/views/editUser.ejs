@@ -1,0 +1,46 @@
+<div class="content">
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <div class="card mt-5">
+              <div class="card-body">
+                  <h3 class="card-title text-center mb-4">Chỉnh sửa tài khoản</h3>
+                  <form action="/edituser" method="POST">
+                      <div class="mb-3">
+                          <label for="id" class="form-label">ID Người dùng:</label>
+                          <input type="text" id="id" name="id" class="form-control" value="<%= data.row.id %>" required readonly>
+                      </div>
+                      <div class="mb-3">
+                          <label for="username" class="form-label">Tên đăng nhập:</label>
+                          <input type="text" id="username" name="username" class="form-control" value="<%= data.row.username %>" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="password" class="form-label">Mật khẩu:</label>
+                          <input type="password" id="password" name="password" class="form-control" value="<%= data.row.password %>" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="fullname" class="form-label">Họ và tên:</label>
+                          <input type="text" id="fullname" name="fullname" class="form-control" value="<%= data.row.fullname %>" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="address" class="form-label">Địa chỉ:</label>
+                          <input type="text" id="address" name="address" class="form-control" value="<%= data.row.address %>" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="sex" class="form-label">Giới tính:</label>
+                          <select id="sex" name="sex" class="form-select" required>
+                              <option value="male" <% if(data.row.sex === 'male') { %>selected<% } %>>Nam</option>
+                              <option value="female" <% if(data.row.sex === 'female') { %>selected<% } %>>Nữ</option>
+                              <option value="other" <% if(data.row.sex === 'other') { %>selected<% } %>>Khác</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="email" class="form-label">Email:</label>
+                          <input type="email" id="email" name="email" class="form-control" value="<%= data.row.email %>" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">Cập nhật</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

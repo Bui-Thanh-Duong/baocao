@@ -1,0 +1,72 @@
+.textCenterDk {
+    color: rgb(11, 124, 124);
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+
+.formControlDkmot {
+    border: none;
+}
+
+.formControlDkhai {
+    border: none;
+}
+
+.customInputDk {
+    background-color: rgb(11, 124, 124);
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.customInputDk::placeholder {
+    color: white;
+    font-size: 15px;
+}
+
+.navbarExpandLgDk img {
+    width: 100%;
+    margin-top: 100px;
+}
+
+.mothang {
+    font-size: 15px;
+}
+
+.xacnhandangky button {
+    background-color: rgb(11, 124, 124);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-top: 20px;
+    border: none;
+    font-size: 17px;
+}
+
+.xacnhandangkyButton:hover {
+    background-color: rgb(24, 106, 106);
+    cursor: pointer;
+}
+
+input.customInputDk:focus {
+    background-color: rgb(11, 124, 124);
+    outline: none;
+    color: white;
+}
+
+.namngangdangnhap {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+
+.errorMessage {
+    color: red;
+    font-size: 14px;
+  }

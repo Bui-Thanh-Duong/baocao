@@ -1,0 +1,55 @@
+
+<div class="content">
+    <% if (data.error) { %>
+        <div class="alert alert-info">
+            <%= data.error %> <!-- Hiển thị thông báo lỗi hoặc thành công -->
+        </div>
+    <% } %>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <h2 class="mb-4 text-center">Thêm Sản Phẩm</h2>
+            <form method="post" action="/insertproduct" enctype="multipart/form-data">
+                <!-- Các trường nhập liệu -->
+                <div class="mb-3">
+                    <label for="productName" class="form-label">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="productName" name="productName"
+                        placeholder="Nhập tên sản phẩm" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="productPrice" class="form-label">Giá sản phẩm</label>
+                    <input type="text" class="form-control" id="productPrice" name="productPrice"
+                        placeholder="Nhập giá sản phẩm" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="productImage" class="form-label">Hình ảnh sản phẩm</label>
+                    <input type="file" class="form-control" id="productImage" name="productImage" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="productDescription" class="form-label">Mô tả sản phẩm</label>
+                    <textarea class="form-control" id="productDescription" name="productDescription" rows="3"
+                        placeholder="Nhập mô tả sản phẩm" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="productGroup" class="form-label">Nhóm</label>
+                    <select class="form-control" id="productGroup" name="productGroup" required>
+                        <option value="" disabled selected>Chọn nhóm sản phẩm</option>
+                        <% if (data.category && data.category.length> 0) { %>
+                            <% data.category.forEach(group=> { %>
+                                <option value="<%= group.idnhom %>">
+                                    <%= group.ten %>
+                                </option>
+                                <% }) %>
+                                    <% } %>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Thêm sản phẩm</button>
+            </form>
+
+        </div>
+    </div>
+</div>

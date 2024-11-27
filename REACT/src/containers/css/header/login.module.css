@@ -1,0 +1,75 @@
+.container{
+  width: 100%;
+}
+.hinhdau {
+  width: 50%;
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.textCenter {
+  font-size: 50px;
+  margin-top: -150px;
+  margin-bottom: 50px;
+  color: rgb(228, 159, 222);
+}
+
+.customInput {
+  background-color: rgb(233, 167, 230);
+  font-weight: 500;
+  padding: 10px 200px 10px 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  color: white !important;
+}
+
+.customInput::placeholder {
+  color: white !important;
+}
+
+/* CSS module */
+.hinhcuoi {
+  width: 100%;
+}
+
+
+.formCheckInput {
+  width: 20px;
+  height: 18px;
+}
+
+.formCheckLabel {
+  font-size: 15px;
+  margin-left: 20px;
+}
+
+.textDecorationNone {
+  font-size: 15px;
+  margin-left: 75px;
+}
+
+.thanhlogin > button {
+  background-color: rgb(234, 176, 226);
+  font-weight: 500;
+  padding: 10px 180px 10px 10px;
+  font-size: 15px;
+  color: white !important;
+  text-indent: calc(175px);
+  border-radius: 5px;
+}
+
+.namngangdangki {
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.customInput:focus {
+  background-color: rgb(233, 167, 226);
+  outline: none;
+  color: white;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+}

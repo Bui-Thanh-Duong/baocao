@@ -1,0 +1,43 @@
+/* userInfo.module.css */
+
+.container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .heading {
+    text-align: center;
+    color: #333;
+  }
+  
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .tdFirst {
+    font-weight: bold;
+  }
+  
+  .tableRowHover:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .welcomeMessage {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-top: 20px;
+  }
+  

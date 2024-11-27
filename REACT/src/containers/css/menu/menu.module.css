@@ -1,0 +1,68 @@
+.menu-container {
+  position: relative;
+  z-index: 2;
+  background-color: #91d9e9;
+}
+
+.menu-nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* Căn menu về phía trái */
+  padding-left: 0; /* Đảm bảo không có khoảng cách từ bên trái */
+}
+
+.menu-item {
+  text-align: left; /* Đảm bảo nội dung của mỗi item được căn trái */
+  padding-left: 1rem; /* Điều chỉnh khoảng cách các item */
+  padding-right: 1rem;
+}
+.menu-item:hover > .dropdown-menu {
+  display: block;
+  margin: 0 0 0 1.5rem;
+}
+.menu-link {
+  color: var(--bright-white) !important;
+  font-size: 1.6rem;
+  text-decoration: none;
+}
+
+.menu-link:hover {
+  color: rgb(255, 80, 4);
+}
+
+.dropdown-menu {
+  background-color: #343a40;
+  border: none;
+}
+
+.menu-dropitem {
+  color: white !important;
+  font-size: 1.6rem !important;
+  padding: 0rem 3rem 0rem 3rem;
+}
+
+.menu-dropitem:hover {
+  background-color: #6c757d;
+}
+
+/* tablet */
+@media (max-width: 992px) {
+  .menu-nav {
+    display: flex;
+    justify-content: flex-start; /* Căn menu về trái trên tablet */
+    flex-wrap: wrap;
+  }
+  .menu-item {
+    padding: 0.5rem;
+  }
+  .menu-link > i {
+    display: none;
+  }
+}
+
+/* phone */
+@media (max-width: 645px) {
+  .menu-nav {
+    justify-content: flex-start; /* Căn menu về trái trên điện thoại */
+  }
+}
