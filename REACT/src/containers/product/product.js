@@ -10,33 +10,33 @@ const ProductList = () => {
   const [sonbong, setsonbong] = useState([]);
 
   useEffect(() => {
-    // Fetch data for "SẢN PHẨM MỚI"
     axios.get('http://localhost:3000/api/v1/newproduct')
-      .then(response => setNewProducts(response.data.products))
+      .then(response => setNewProducts(response.data.products || [])) // Gán giá trị mặc định nếu không có dữ liệu
       .catch(error => console.error('Error fetching new products:', error));
-
-    // Fetch data for "Son Thỏi"
+  
     axios.get('http://localhost:3000/api/v1/getproductbycategory/1')
-      .then(response => setsonthoi(response.data.productbycategory))
+      .then(response => setsonthoi(response.data.productbycategory || []))
       .catch(error => console.error('Error fetching phone products:', error));
-
-    // Fetch data for "Son Dưỡng"
+  
     axios.get('http://localhost:3000/api/v1/getproductbycategory/2')
-      .then(response => setsonduong(response.data.productbycategory))
+      .then(response => setsonduong(response.data.productbycategory || []))
       .catch(error => console.error('Error fetching laptop products:', error));
-
-    // Fetch data for "Son Bóng"
+  
     axios.get('http://localhost:3000/api/v1/getproductbycategory/3')
-      .then(response => setsonbong(response.data.productbycategory))
+      .then(response => setsonbong(response.data.productbycategory || []))
       .catch(error => console.error('Error fetching accessory products:', error));
   }, []);
+  
 
   const renderProduct = (products) => {
+    if (!products.length) {
+      return <p>Không có sản phẩm nào</p>;
+    }
     return products.map((product) => (
       <div className={styles.productProduct} key={product.masp}>
         <Link to={`/deltaproduct/${product.masp}`}>
           <div>
-            <img className={styles.productImg} src={`http://localhost:3000/images/product/${product.hinhanh}`} alt="" />
+            <img className={styles.productImg} src={`http://localhost:3000/images/product/${product.hinhanh}`} alt={product.ten} />
             <div className={styles.productImgOverlay}>
               <div className={styles.productHoverIcons}>
                 <i className="fas fa-search"></i>
@@ -51,7 +51,7 @@ const ProductList = () => {
         </Link>
       </div>
     ));
-  };
+  };  
 
   return (
     <div>

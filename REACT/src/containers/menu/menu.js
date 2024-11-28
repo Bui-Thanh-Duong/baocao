@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import CategoryDropdown from './CategoryDropdown'; // Import component danh mục
 import styles from '../css/menu/menu.module.css'; // Đảm bảo rằng bạn có các style thích hợp
 
-const Menu = ({ categorys, user }) => {
+const Menu = ({ categorys = [], user = null }) => {
   return (
     <div className={`container-fluid bg-dark ${styles['menu-container']}`}>
       <nav className="menu-navbar-container navbar-container navbar navbar-expand">
@@ -25,7 +25,8 @@ const Menu = ({ categorys, user }) => {
             >
               <i className="fas fa-list"></i> Danh mục khác
             </Link>
-            <CategoryDropdown categorys={categorys} /> {/* Thay thế bằng component CategoryDropdown */}
+            <CategoryDropdown categorys={categorys} />
+
           </li>
           {user && user.quyen === 1 && (
             <li className={`nav-item ${styles['menu-item']}`}>

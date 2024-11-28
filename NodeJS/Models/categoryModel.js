@@ -1,114 +1,55 @@
-import express from 'express'
-import { Sequelize, DataTypes, where } from 'sequelize';
-import { sequelize } from '../configs/connectDatabase'; // Đảm bảo rằng bạn đã xuất đúng đối tượng sequelize từ file kết nối.
+import mysql from 'mysql2';
+import promisePool from '../configs/db';
 
-// Định nghĩa mô hình `Nhom`
-const Nhom = sequelize.define('Nhom', {
-    idnhom: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    ten: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-}, {
-    tableName: 'nhom', // Đảm bảo bảng đúng tên
-    timestamps: false  // Nếu bảng không có cột createdAt, updatedAt
-});
-
-// Lấy tất cả các nhóm
-const getAllNhom = async (offset = null, limit = null) => {
-    const queryOptions = {};
-    // Nếu có giá trị offset, thêm vào queryOptions
-    if (offset !== null) {
-        queryOptions.offset = offset;
-    }
-    // Nếu có giá trị limit, thêm vào queryOptions
-    if (limit !== null) {
-        queryOptions.limit = limit;
-    }
-    const category = await Nhom.findAll(queryOptions);
-    return category;
+const getAllNhom = async (offset = 0, limit = 10) => {
+    const sqlQuery = `SELECT idnhom, ten FROM nhom LIMIT ?, ?`;
+    const [rows] = await promisePool.query(sqlQuery, [offset, limit]);
+    return rows;
 };
-
-
 
 const countNhom = async () => {
-    return await Nhom.count();
+    const [rows] = await promisePool.query(`SELECT COUNT(idnhom) AS total FROM nhom`);
+    return rows[0].total;
 };
 
-// Xóa nhóm theo ID
 const deleteNhomById = async (id) => {
     try {
-        const result = await Nhom.destroy({
-            where: {
-                idnhom: id
-            }
-        });
-        return result;  // result sẽ là số lượng bản ghi bị xóa (nếu thành công)
+        const [result] = await promisePool.query(`DELETE FROM nhom WHERE idnhom = ?`, [id]);
+        return result.affectedRows;
     } catch (error) {
-        console.error('Error deleting group by ID:', error);
-        throw error;
+        console.error('Error deleting category by ID:', error);
+        throw new Error('Could not delete category.');
     }
 };
 
-// Cập nhật tên nhóm
-const updateNhom = async (id, ten) => {
-    try {
-        const result = await Nhom.update(
-            { ten },
-            {
-                where: {
-                    idnhom: id
-                }
-            }
-        );
-        return result;  // result là mảng [số lượng bản ghi được cập nhật, mảng bản ghi]
-    } catch (error) {
-        console.error('Error updating group name:', error);
-        throw error;
-    }
-};
-
-// Thêm nhóm mới
 const insertNhom = async (ten) => {
     try {
-        const result = await Nhom.create({ ten });
-        return result;  // result là bản ghi mới được tạo
+        const [result] = await promisePool.query(`INSERT INTO nhom (ten) VALUES (?)`, [ten]);
+        return result.insertId;
     } catch (error) {
-        console.error('Error inserting new group:', error);
-        throw error;
+        console.error('Error inserting new category:', error);
+        throw new Error('Could not insert new category.');
     }
 };
 
-
-const getCategorybyid = async (idnhom) => {
-    if (!idnhom) {
-        throw new Error('idnhom is required');
-    }
+const getCategoryById = async (idnhom) => {
     try {
-        const result = await Nhom.findOne({ where: { idnhom } });
-        return result;
+        const [rows] = await promisePool.query(`SELECT idnhom, ten FROM nhom WHERE idnhom = ?`, [idnhom]);
+        return rows[0];
     } catch (error) {
-        console.error('Error finding a group:', error);
-        throw error;
+        console.error('Error fetching category by ID:', error);
+        throw new Error('Could not fetch category by ID.');
     }
 };
-
 
 const updateCategory = async (idnhom, ten) => {
     try {
-        const result = await Nhom.update(
-            { ten },
-            { where: { idnhom } }
-        );
-        return result;
+        const [result] = await promisePool.query(`UPDATE nhom SET ten = ? WHERE idnhom = ?`, [ten, idnhom]);
+        return result.affectedRows;
     } catch (error) {
-        console.error('Error updating a group:', error);
-        throw error;
+        console.error('Error updating category:', error);
+        throw new Error('Could not update category.');
     }
-}
+};
 
-export default { getAllNhom, deleteNhomById, updateNhom, insertNhom, countNhom, getCategorybyid, updateCategory};
+export default { getAllNhom, deleteNhomById, insertNhom, countNhom, getCategoryById, updateCategory };

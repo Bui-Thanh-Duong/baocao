@@ -1,24 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from '../css/header/header.module.css';
+import HeaderBanner from './headerBanner';
 import { Link } from 'react-router-dom';
-import { Context } from './Context';
+import { Context } from './Context'; // Import context để lấy thông tin user
 import { logout } from './userService';
-import axios from 'axios';
 
 const Header = () => {
   const [searchInput, setSearchInput] = useState('');
   const { user, logoutContext } = useContext(Context);
-  const [helloMessage, setHelloMessage] = useState('');
-
-  // Sử dụng useEffect để gọi API khi component được render lần đầu tiên
-  useEffect(() => {
-    const fetchHelloMessage = async () => {
-      const response = await axios.get('http://localhost:3000/api/v1/hello');
-      setHelloMessage(response.data.message);
-    };
-
-    fetchHelloMessage();
-  }); 
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -26,18 +15,23 @@ const Header = () => {
   };
 
   const handleLogout = async (e) => {
-    e.preventDefault();
-    console.log("Logout function triggered!");
-    await logout();
-    logoutContext();
+    e.preventDefault();  // Prevent default action
+    console.log("Logout function triggered!"); // Check if it is being called
+    try {
+      await logout();  // Gọi API logout
+      logoutContext();  // Cập nhật context và localStorage sau khi logout thành công
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
     <div className={`${styles.headerContainer}`}>
+      <HeaderBanner />
       <nav className={`${styles.headerColor} navbar navbar-expand-lg`}>
         <div className="mr-5 px-5">
           <Link to="/" className={`${styles.logo}`}>
-            <h1>Natural Lipstick {<span>{helloMessage}</span>}</h1>
+            <h1>LOGO</h1>
           </Link>
         </div>
         <button
@@ -82,7 +76,7 @@ const Header = () => {
                   <div className={styles.headerHiUser}><span>Xin chào, {user.username}</span></div>
                   <span
                     className={styles.logoutBtn}
-                    onClick={handleLogout}
+                    onClick={handleLogout}  // Pass the function reference
                   >
                     <i className="fa-solid fa-right-from-bracket"></i> Đăng xuất
                   </span>

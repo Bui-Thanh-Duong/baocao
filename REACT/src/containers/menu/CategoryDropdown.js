@@ -11,13 +11,14 @@ const CategoryDropdown = () => {
   useEffect(() => {
     // Gọi API lấy danh sách category
     axios.get('http://localhost:3000/api/v1/category')
-      .then(response => {
-        if (response.data.errCode === 1) {
-          setCategories(response.data.categorys);
-        } else {
-          setError('Có lỗi xảy ra khi lấy dữ liệu');
-        }
-      })
+
+    .then(response => {
+      if (response.data.errCode === 1) {
+        setCategories(response.data.categories); // Đảm bảo API trả đúng dữ liệu
+      } else {
+        setError('Có lỗi xảy ra khi lấy dữ liệu');
+      }
+    })
       .catch(error => {
         console.error('Error fetching categories:', error);
         setError('Không thể kết nối với API');
@@ -43,7 +44,7 @@ const CategoryDropdown = () => {
         categories.map((category, index) => (
           <Link
             key={index}
-            to={`productbycategory/${category.idnhom}`}  // Sử dụng `to` thay vì `href`
+            to={category?.idnhom ? `productbycategory/${category.idnhom}` : '#'}  // Sử dụng `to` thay vì `href`
             className={`${styles['menu-dropitem']} dropdown-item ${styles.categoryListItem}`} // Thêm class để tùy chỉnh style
           >
             {/* Hiển thị icon nếu có */}

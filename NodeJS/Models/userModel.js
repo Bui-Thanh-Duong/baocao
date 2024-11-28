@@ -1,124 +1,83 @@
-import express from 'express'
-import bcrypt from 'bcryptjs';
-import { sequelize, DataTypes } from '../configs/connectDatabase'; // Nhập sequelize và DataTypes từ connectDatabase
+import pool from '../configs/db.js';
 
-// Định nghĩa mô hình User với Sequelize
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER,  // Sử dụng DataTypes
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  fullname: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  sex: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true,
-  },
-  role: {
-    type: DataTypes.STRING,
-    allowNull: false,  // Bạn có thể thay đổi điều kiện này nếu muốn
-    defaultValue: 'user'  // Gán giá trị mặc định là 'user'
-  }
-}, {
-  timestamps: false, // Không sử dụng createdAt, updatedAt
-});
-
-
-// Đồng bộ mô hình với cơ sở dữ liệu (Chỉ cần chạy một lần khi ứng dụng bắt đầu)
-sequelize.sync()
-  .then(() => console.log('Database synchronized'))
-  .catch((err) => console.log('Error syncing database: ', err));
-
-// Các hàm CRUD sử dụng Sequelize
-
-const getAllUser = async (offset, limit) => {
-  const users = await User.findAll({
-    offset: offset,
-    limit: limit
-  });
-  return users;
+const getAllUsers = async (offset, limit) => {
+  const [rows] = await pool.query(
+    `SELECT * FROM users LIMIT ?, ?`,
+    [offset, limit]
+  );
+  return rows;
 };
 
 const countUsers = async () => {
-  return await User.count(); // Trả về tổng số lượng người dùng
+  const [rows] = await pool.query(
+    `SELECT COUNT(*) AS total FROM users`
+  );
+  return rows[0].total;
 };
 
-
 const getUserById = async (id) => {
-  const user = await User.findByPk(id);
-  return user;
+  const [rows] = await pool.query(
+    `SELECT * FROM users WHERE id = ?`,
+    [id]
+  );
+  return rows[0];
 };
 
 const getUserByUsername = async (username) => {
-  const user = await User.findOne({
-    where: { username }
-  });
-  return user;
+  const [rows] = await pool.query(
+    `SELECT * FROM users WHERE username = ?`,
+    [username]
+  );
+  return rows[0];
+};
+
+const insertUser = async (user) => {
+  const { username, password, fullname, address, sex, email } = user;
+  const [result] = await pool.query(
+    `INSERT INTO users (username, password, fullname, address, sex, email) VALUES (?, ?, ?, ?, ?, ?)`,
+    [username, password, fullname, address, sex, email]
+  );
+  return result.insertId;
+};
+
+const updateUser = async (id, user) => {
+  const { username, password, fullname, address, sex, email } = user;
+  const [result] = await pool.query(
+    `UPDATE users SET username = ?, password = ?, fullname = ?, address = ?, sex = ?, email = ? WHERE id = ?`,
+    [username, password, fullname, address, sex, email, id]
+  );
+  return result.affectedRows;
 };
 
 const deleteUserByID = async (id) => {
-  const result = await User.destroy({
-    where: { id }
-  });
-  return result;
-};
-
-const updateUser = async (id, username, password, fullname, address, sex, email) => {
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-
-  const result = await User.update(
-    { username, password: hashedPassword, fullname, address, sex, email },
-    { where: { id } }
+  const [result] = await pool.query(
+    `DELETE FROM users WHERE id = ?`,
+    [id]
   );
-  return result;
-};
-
-const insertUser = async (username, password, fullname, address, sex, email) => {
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-
-  const user = await User.create({
-    username,
-    password: hashedPassword,
-    fullname,
-    address,
-    sex,
-    email
-  });
-
-  return user;
+  return result.affectedRows;
 };
 
 const isUserExist = async (username) => {
-  const user = await User.findOne({ where: { username } });
-  return user ? true : false;
+  const user = await getUserByUsername(username);
+  return !!user;
 };
 
 const isEmailExist = async (email) => {
-  const user = await User.findOne({ where: { email } });
-  return user ? true : false;
+  const [rows] = await pool.query(
+    `SELECT * FROM users WHERE email = ?`,
+    [email]
+  );
+  return rows.length > 0;
 };
 
-export default { getAllUser, getUserById, deleteUserByID, updateUser, insertUser, isUserExist, isEmailExist, getUserByUsername, countUsers };
+export default {
+  getAllUsers,
+  countUsers,
+  getUserById,
+  getUserByUsername,
+  insertUser,
+  updateUser,
+  deleteUserByID,
+  isUserExist,
+  isEmailExist,
+};

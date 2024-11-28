@@ -1,109 +1,99 @@
-import express from "express";
-import userModel from '../Models/categoryModel'  // Import model để xử lý với CSDL hoặc logic nghiệp vụ
+import categoryModel from '../Models/categoryModel';
 
 const getAllCategory = async (req, res) => {
   try {
-    let categoryList = await userModel.getAllNhom(); // Gọi model để lấy danh sách người dùng
+    const categoryList = await categoryModel.getAllNhom();
     res.render('home', {
       data: {
         title: 'List Category',
         page: 'Category',
-        rows: categoryList // Truyền dữ liệu vào view
+        rows: categoryList
       }
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error retrieving Categorys.");
+    res.status(500).send("Error retrieving categories.");
   }
-}
-// API
-// API
+};
+
 const getAllNhom = async (req, res) => {
-  let categorys = await userModel.getAllNhom();
+  const categories = await categoryModel.getAllNhom();
   return res.status(200).json({
     errCode: 1,
     message: "Success",
-    categorys: categorys
-  })
-}
+    categories: categories
+  });
+};
 
-const createloai = async (req, res) => {
-  return res.render('home', {
-    data: {
-      title: 'List Category',
-      // 
-      page: 'insertcategory',
-    }
-  })
-}
-const insertloai = async (req, res) => {
+const insertCategory = async (req, res) => {
   try {
     const { tenloai } = req.body;
-    if (await userModel.insertNhom(tenloai)) {
+    if (await categoryModel.insertNhom(tenloai)) {
       res.redirect("/insertcategory");
     }
   } catch (error) {
-    console.error('Lỗi trong quá trình thêm loại:', error);
-    res.status(500).send('Lỗi khi thêm loại');
+    console.error('Error adding category:', error);
+    res.status(500).send('Error adding category');
   }
-}
-const getAllnhom = async (req, res) => {
+};
+
+const getAllCategories = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Trang hiện tại, mặc định là 1
-    const limit = 5; // Số lượng mục trên mỗi trang
-    const offset = (page - 1) * limit; // Tính vị trí bắt đầu lấy dữ liệu
-    // Lấy số lượng người dùng tổng cộng
-    const totalUsers = await userModel.countNhom(); 
-    const totalPages = Math.ceil(totalUsers / limit);
-    // Lấy danh sách người dùng theo phân trang
-    let Listcategory = await userModel.getAllNhom(offset, limit);
-        res.render('home', {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
+    const totalCategories = await categoryModel.countNhom();
+    const totalPages = Math.ceil(totalCategories / limit);
+    const categoryList = await categoryModel.getAllNhom((page - 1) * limit, limit);
+    
+    res.render('home', {
       data: {
-        title: 'List Category',
-        page: 'listCategory',
-        rows: Listcategory,
+        title: 'List Categories',
+        page: 'listCategories',
+        rows: categoryList,
         currentPage: page,
         totalPages: totalPages
       }
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Lỗi khi tải dữ liệu.");
+    res.status(500).send("Error loading data.");
   }
 };
-const deleteNhom = async (req, res) => {
-  try{
+
+const deleteCategory = async (req, res) => {
+  try {
     const { idnhom } = req.body;
-    await userModel.deleteNhomById(idnhom)
+    if (!idnhom) return res.status(400).send("Invalid category ID.");
+    await categoryModel.deleteNhomById(idnhom);
     res.redirect('/listcategory');
-  }catch (error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).send("Lỗi khi thực hiện câu truy vấn.");
+    res.status(500).send("Error deleting category.");
   }
-}
+};
 
 const editCategory = async (req, res) => {
   const { idnhom } = req.params;
-  const category = await userModel.getCategorybyid(idnhom)
+  const category = await categoryModel.getCategoryById(idnhom);
   return res.render('home', {
     data: {
-      title: 'List Category',
+      title: 'Edit Category',
       page: 'editCategory',
       category: category
     }
-  })
-}
-
+  });
+};
 
 const updateCategory = async (req, res) => {
-  try{
+  try {
     const { idnhom, ten } = req.body;
-    await userModel.updateCategory(idnhom,ten);
+    await categoryModel.updateCategory(idnhom, ten);
     res.redirect(`/editCategory/${idnhom}`);
-  }catch (error) {
+  } catch (error) {
     console.error(error);
-    res.status(500).send("Lỗi khi thực hiện câu truy vấn.");
+    res.status(500).send("Error updating category.");
   }
-}
+};
 
-export default { getAllNhom, getAllCategory, createloai, insertloai, getAllnhom, deleteNhom, editCategory, updateCategory};
+export default { getAllNhom, getAllCategory, insertCategory, deleteCategory, getAllCategories, editCategory, updateCategory };

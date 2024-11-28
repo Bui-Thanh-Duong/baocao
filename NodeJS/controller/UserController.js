@@ -1,90 +1,154 @@
-import express from "express";
-import userModel from '../Models/userModel'  // Import model để xử lý với CSDL hoặc logic nghiệp vụ
-import bcrypt from 'bcryptjs'
+import userModel from '../Models/userModel.js';
+import bcrypt from 'bcryptjs';
 
-// Controller để lấy tất cả người dùng
+// Lấy tất cả người dùng
 const getAllUser = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Trang hiện tại, mặc định là 1
-    const limit = 5; // Số lượng mục trên mỗi trang
-    const offset = (page - 1) * limit; // Tính vị trí bắt đầu lấy dữ liệu
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
 
-    // Lấy số lượng người dùng tổng cộng
-    const totalUsers = await userModel.countUsers(); 
+    const totalUsers = await userModel.countUsers();
     const totalPages = Math.ceil(totalUsers / limit);
+    const users = await userModel.getAllUsers(offset, limit);
 
-    // Lấy danh sách người dùng theo phân trang
-    let productList = await userModel.getAllUser(offset, limit);
-
-    res.render('home', {
-      data: {
-        title: 'List User',
-        page: 'listUser',
-        rows: productList,
-        currentPage: page,
-        totalPages: totalPages
-      }
-    });
+    res.render('userList', { users, totalPages, currentPage: page });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error retrieving users.");
   }
 };
 
-const viewUser = async (req, res) => {
+// Lấy thông tin người dùng theo ID
+const getUserById = async (req, res) => {
   try {
-    let deltaUser = await userModel.getUserById(req.params.id);
-    res.render('home', {
-      data: {
-        title: 'Delta User',
-        page: 'deltaUser',
-        user: deltaUser
-      }
-    });
+    const { id } = req.params;
+    const user = await userModel.getUserById(id);
+
+    if (!user) {
+      return res.status(404).send("User not found.");
+    }
+
+    res.render('userDetail', { user });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error retrieving user.");
   }
 };
 
+// Tạo người dùng mới
+const createUser = async (req, res) => {
+  try {
+    const { username, password, fullname, address, sex, email } = req.body;
 
-const deleteUser = async (req, res) => {
-  let { id } = req.body; // Get the id from req.body, not req.params
-  await userModel.deleteUserByID(id);
-  res.redirect('/getuser');
-};
-
-
-
-const editUser = async (req, res) => {
-  let id = req.params.id;
-  let dataUser = await userModel.getUserById(id);
-  res.render('home', { data: { title: 'Edit User', page: 'editUser', row: dataUser} });
-};
-const updateUser = async (req, res) => {
-  const { id, username, password, fullname, address, sex, email } = req.body;
-  await userModel.updateUser(id, username, password, fullname, address, sex, email);
-  // Điều hướng tới trang chỉnh sửa của người dùng với ID đã được cập nhật
-  res.redirect(`/edituser/${id}`);
-};
-// Controller để tạo người dùng mới
-const createUser = (req, res) => {
-  res.render('home', {
-    data: {
-      title: 'Create New User',
-      page: 'createNewUser'
+    if (await userModel.isUserExist(username)) {
+      return res.status(400).send("Username already exists.");
     }
-  });
-}
-const insertUser = async (req, res) => {
-  let {username, password, fullname, address, sex, email } = req.body;
-  if (await userModel.isUserExist(username) || await userModel.isEmailExist(email)) {
-    res.send("User or email already exists");
-  } else {
-    await userModel.insertUser(username, password, address, fullname, sex, email);
-    res.redirect("/createNewUser"); 
+
+    if (await userModel.isEmailExist(email)) {
+      return res.status(400).send("Email already exists.");
+    }
+
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    await userModel.insertUser({ username, password: hashedPassword, fullname, address, sex, email });
+
+    res.redirect('/users');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error creating user.");
   }
 };
 
-// Xuất các hàm controller để sử dụng trong routing
-export { getAllUser, createUser, viewUser, deleteUser, editUser, updateUser, insertUser};
+// Sửa thông tin người dùng
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, password, fullname, address, sex, email } = req.body;
+
+    const user = await userModel.getUserById(id);
+    if (!user) {
+      return res.status(404).send("User not found.");
+    }
+
+    // Nếu password có thay đổi, băm lại mật khẩu
+    const updatedUser = {
+      username,
+      password: password ? bcrypt.hashSync(password, 10) : user.password,
+      fullname,
+      address,
+      sex,
+      email
+    };
+
+    const affectedRows = await userModel.updateUser(id, updatedUser);
+    if (affectedRows === 0) {
+      return res.status(500).send("Error updating user.");
+    }
+
+    res.redirect(`/users/${id}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating user.");
+  }
+};
+
+// Xóa người dùng theo ID
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const affectedRows = await userModel.deleteUserByID(id);
+
+    if (affectedRows === 0) {
+      return res.status(404).send("User not found.");
+    }
+
+    res.redirect('/users');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting user.");
+  }
+};
+
+// Kiểm tra nếu người dùng đã tồn tại
+const checkUserExist = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await userModel.isUserExist(username);
+
+    if (user) {
+      return res.status(400).send("Username already exists.");
+    }
+
+    res.status(200).send("Username is available.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error checking username.");
+  }
+};
+
+// Kiểm tra nếu email đã tồn tại
+const checkEmailExist = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const emailExists = await userModel.isEmailExist(email);
+
+    if (emailExists) {
+      return res.status(400).send("Email already exists.");
+    }
+
+    res.status(200).send("Email is available.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error checking email.");
+  }
+};
+
+export {
+  getAllUser,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  checkUserExist,
+  checkEmailExist
+};
