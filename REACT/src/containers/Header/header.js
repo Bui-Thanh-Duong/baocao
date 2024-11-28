@@ -27,7 +27,7 @@ const Header = ({ categorys = []}) => {
       <nav className={`${styles.headerColor} navbar navbar-expand-lg`}>
         <div className="mr-5 px-5">
           <Link to="/" className={`${styles.logo}`}>
-            <h1>LOGO</h1>
+            <h1>Natural Lipstick</h1>
           </Link>
         </div>
         <button

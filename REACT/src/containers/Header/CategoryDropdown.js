@@ -10,7 +10,7 @@ const CategoryDropdown = () => {
 
   useEffect(() => {
     // Gọi API lấy danh sách category
-    axios.get('http://localhost:3000/api/v1/category')
+    axios.get('http://localhost:3000/api/category')
 
     .then(response => {
       if (response.data.errCode === 1) {

@@ -22,7 +22,6 @@ const getSanPhamByCategory = async (categoryId) => {
         return rows;
 };
 
-
 const getSanPhamById = async (id) => {
         const [rows] = await promisePool.query(`
             SELECT sp.masp, sp.ten, sp.gia, sp.hinhanh, sp.mota, nhom.ten AS nhom
@@ -30,6 +29,11 @@ const getSanPhamById = async (id) => {
             JOIN nhom ON sp.idnhom = nhom.idnhom
             WHERE sp.masp = ?
         `, [id]);
+
+        if (rows.length === 0) {
+            throw new Error('Product not found');
+        }
+
         return rows[0];
 };
 

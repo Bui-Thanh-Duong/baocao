@@ -1,14 +1,12 @@
 import productModel from '../Models/productModel';
 
 const deltaProduct = async (req, res) => {
-        const product = await productModel.getSanPhamById(req.params.id);
-        res.render('home', {
-            data: {
-                title: 'Delta Product',
-                page: 'deltaProduct',
-                product: product
-            }
-        });
+      const product = await productModel.getSanPhamById(req.params.id);
+      res.json({
+          errCode: 1,
+          message: 'Success',
+          deltaProduct: product
+      });
 };
 
 const createProduct = async (req, res) => {

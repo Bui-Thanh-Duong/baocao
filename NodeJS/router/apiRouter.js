@@ -19,19 +19,15 @@ const initAPIRoute = (app) => {
 
     // Category and Product operations
     router.get('/category', CategoryController.getAllNhom);
-    router.get('/productbycategory/:id', CategoryController.getAllNhom);
     router.get('/newproduct', ProductController.getNewProducts);
     router.get('/getproductbycategory/:id', ProductController.getSanPhamBynhom);
+    router.get('/deltaproduct/:id', ProductController.deltaProduct);
 
-    // Get products by category
-    router.get('/getproductbycategory/:id', ProductController.getSanPhamBynhom);
-    router.get('/getproductbycategory/:id', ProductController.getSanPhamBynhom);
-    
     // Home and Hello route
     router.get('/hello', HomeController.getHello);
 
     // Attach router to express app
-    return app.use('/api/v1', router);
+    return app.use('/api/', router);
 };
 
 export default initAPIRoute;

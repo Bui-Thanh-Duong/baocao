@@ -10,21 +10,17 @@ const ProductList = () => {
   const [sonbong, setsonbong] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/v1/newproduct')
-      .then(response => setNewProducts(response.data.products || []))
-      .catch(error => console.error('Error fetching new products:', error));
+    axios.get('http://localhost:3000/api/newproduct')
+      .then(response => setNewProducts(response.data.products || []));
   
-    axios.get('http://localhost:3000/api/v1/getproductbycategory/1')
-      .then(response => setsonthoi(response.data.productbycategory || []))
-      .catch(error => console.error('Error fetching phone products:', error));
+    axios.get('http://localhost:3000/api/getproductbycategory/1')
+      .then(response => setsonthoi(response.data.productbycategory || []));
   
-    axios.get('http://localhost:3000/api/v1/getproductbycategory/2')
-      .then(response => setsonduong(response.data.productbycategory || []))
-      .catch(error => console.error('Error fetching laptop products:', error));
+    axios.get('http://localhost:3000/api/getproductbycategory/2')
+      .then(response => setsonduong(response.data.productbycategory || []));
   
-    axios.get('http://localhost:3000/api/v1/getproductbycategory/3')
-      .then(response => setsonbong(response.data.productbycategory || []))
-      .catch(error => console.error('Error fetching accessory products:', error));
+    axios.get('http://localhost:3000/api/getproductbycategory/3')
+      .then(response => setsonbong(response.data.productbycategory || []));
   }, []);
   
   const renderProduct = (products) => {
