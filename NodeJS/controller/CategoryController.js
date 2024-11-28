@@ -1,7 +1,6 @@
 import categoryModel from '../Models/categoryModel';
 
 const getAllCategory = async (req, res) => {
-  try {
     const categoryList = await categoryModel.getAllNhom();
     res.render('home', {
       data: {
@@ -10,10 +9,6 @@ const getAllCategory = async (req, res) => {
         rows: categoryList
       }
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error retrieving categories.");
-  }
 };
 
 const getAllNhom = async (req, res) => {
@@ -26,19 +21,13 @@ const getAllNhom = async (req, res) => {
 };
 
 const insertCategory = async (req, res) => {
-  try {
     const { tenloai } = req.body;
     if (await categoryModel.insertNhom(tenloai)) {
       res.redirect("/insertcategory");
     }
-  } catch (error) {
-    console.error('Error adding category:', error);
-    res.status(500).send('Error adding category');
-  }
 };
 
 const getAllCategories = async (req, res) => {
-  try {
     const page = parseInt(req.query.page) || 1;
     const limit = 5;
     const offset = (page - 1) * limit;
@@ -55,22 +44,13 @@ const getAllCategories = async (req, res) => {
         totalPages: totalPages
       }
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error loading data.");
-  }
 };
 
 const deleteCategory = async (req, res) => {
-  try {
     const { idnhom } = req.body;
     if (!idnhom) return res.status(400).send("Invalid category ID.");
     await categoryModel.deleteNhomById(idnhom);
     res.redirect('/listcategory');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error deleting category.");
-  }
 };
 
 const editCategory = async (req, res) => {
@@ -86,14 +66,9 @@ const editCategory = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-  try {
     const { idnhom, ten } = req.body;
     await categoryModel.updateCategory(idnhom, ten);
     res.redirect(`/editCategory/${idnhom}`);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error updating category.");
-  }
 };
 
 export default { getAllNhom, getAllCategory, insertCategory, deleteCategory, getAllCategories, editCategory, updateCategory };

@@ -79,28 +79,21 @@ const getSanPhamBynhom = async (req, res) => {
 const updateProduct = async (req, res) => {
     const { masp, productName, productPrice, productDescription, productGroup, oldImage } = req.body;
 
-    let newImageName = oldImage; // oldImage là tên ảnh cũ
+    let newImageName = oldImage;
 
-    // Nếu có ảnh mới
     if (req.file) {
-      newImageName = req.file.filename; // Lấy tên ảnh mới từ multer
+      newImageName = req.file.filename;
     }
 
-    // Nếu có ảnh cũ và ảnh mới được thay thế, xóa ảnh cũ
     if (oldImage && newImageName !== oldImage) {
       const oldImagePath = path.resolve('images/product', oldImage);
-      fs.unlinkSync(oldImagePath); // Xóa ảnh cũ
+      fs.unlinkSync(oldImagePath);
     }
 
-    // Cập nhật thông tin sản phẩm
     const updatedProduct = await productModel.updateProduct(masp, productName, productPrice, newImageName, productDescription, productGroup);
 
-    // Kiểm tra nếu cập nhật thành công
     if (updatedProduct) {
-      // Điều hướng lại trang hiển thị chi tiết sản phẩm sau khi cập nhật
       res.redirect(`/product/${masp}`);
-    } else {
-      res.status(400).send('Failed to update product');
     }
 };
 

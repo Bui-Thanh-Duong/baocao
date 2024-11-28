@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import styles from '../css/header/header.module.css';
-import HeaderBanner from './headerBanner';
 import { Link } from 'react-router-dom';
-import { Context } from './Context'; // Import context để lấy thông tin user
+import { Context } from './Context';
 import { logout } from './userService';
+import CategoryDropdown from './CategoryDropdown';
+import stylesmenu from '../css/header/menu.module.css';
 
-const Header = () => {
+const Header = ({ categorys = []}) => {
   const [searchInput, setSearchInput] = useState('');
   const { user, logoutContext } = useContext(Context);
 
@@ -15,19 +16,14 @@ const Header = () => {
   };
 
   const handleLogout = async (e) => {
-    e.preventDefault();  // Prevent default action
-    console.log("Logout function triggered!"); // Check if it is being called
-    try {
-      await logout();  // Gọi API logout
-      logoutContext();  // Cập nhật context và localStorage sau khi logout thành công
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+    e.preventDefault();
+    console.log("Logout function triggered!");
+      await logout();
+      logoutContext();
   };
 
   return (
     <div className={`${styles.headerContainer}`}>
-      <HeaderBanner />
       <nav className={`${styles.headerColor} navbar navbar-expand-lg`}>
         <div className="mr-5 px-5">
           <Link to="/" className={`${styles.logo}`}>
@@ -47,6 +43,20 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
+          <li className={`nav-item dropdown ${stylesmenu['menu-item']}`}>
+            <Link
+              className={`nav-link ${stylesmenu['menu-link']} active dropdown-toggle`}
+              to="#"
+              id="navbarDropdown1"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i className="fas fa-list"></i> Danh mục khác
+            </Link>
+            <CategoryDropdown categorys={categorys} />
+
+          </li>
             <li className="nav-item">
               <form className="d-flex" onSubmit={handleSearchSubmit}>
                 <input
@@ -70,6 +80,13 @@ const Header = () => {
                 <i className="fas fa-shopping-cart"></i> Giỏ hàng
               </button>
             </li>
+            {user && user.quyen === 1 && (
+            <li className={`nav-item ${stylesmenu['menu-item']}`}>
+              <Link className={`nav-link ${stylesmenu['menu-link']} active`} to="/admin">
+                Quay lại trang Quản trị
+              </Link>
+            </li>
+          )}
             <li className="nav-item">
               {user?.auth ? (
                 <div className={styles.headerInfor}>
@@ -93,5 +110,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;

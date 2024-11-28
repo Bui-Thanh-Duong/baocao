@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';  // Import axios for API requests
 import { Link } from 'react-router-dom';  // Import Link từ react-router-dom để thay thế thẻ <a>
-import styles from '../css/menu/menu.module.css';
+import styles from '../css/header/menu.module.css';
 
 const CategoryDropdown = () => {
   const [categories, setCategories] = useState([]);

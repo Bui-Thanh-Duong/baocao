@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Styles from "../css/menu/menuBanner.module.css"; // Ensure you are importing correctly
+import Styles from "../css/header/menuBanner.module.css";
 
 function Slider() {
   const [imagesSlider1, setImagesSlider1] = useState([]);
@@ -9,7 +9,6 @@ function Slider() {
   const [slideIndex2, setSlideIndex2] = useState(0);
 
   useEffect(() => {
-    // Define the image URLs directly
     const imageUrlsSlider1 = [
       'http://localhost:3000/images/slider/sl1.png',
       'http://localhost:3000/images/slider/sl2.png',

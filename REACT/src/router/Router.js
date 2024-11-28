@@ -5,7 +5,7 @@ import ProductDetail from '../containers/product/deltaproduct';
 import Productbycategory from '../containers/product/productbycategory';
 import Login from '../containers/Header/login';
 import UserInfo from '../containers/user/userInfor';
-import Slider from '../containers/menu/menuBanner';
+import Slider from '../containers/Header/menuBanner';
 import Registry from '../containers/registry/registry';
 
 const HomePage = () => {
