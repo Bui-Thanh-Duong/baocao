@@ -20,11 +20,11 @@ const initAPIRoute = (app) => {
     // Category and Product operations
     router.get('/category', CategoryController.getAllNhom);
     router.get('/productbycategory/:id', CategoryController.getAllNhom);
-    router.get('/newproduct', ProductController.getAllProduct);
-    router.get('/deltaproduct/:id', ProductController.deleteProduct);
+    router.get('/newproduct', ProductController.getNewProducts);
+    router.get('/getproductbycategory/:id', ProductController.getSanPhamBynhom);
 
     // Get products by category
-    router.get('/getallproductbycategory/:id', ProductController.getAllSanPhamBynhom);
+    router.get('/getproductbycategory/:id', ProductController.getSanPhamBynhom);
     router.get('/getproductbycategory/:id', ProductController.getSanPhamBynhom);
     
     // Home and Hello route

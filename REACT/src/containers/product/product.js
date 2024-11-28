@@ -11,7 +11,7 @@ const ProductList = () => {
 
   useEffect(() => {
     axios.get('http://localhost:3000/api/v1/newproduct')
-      .then(response => setNewProducts(response.data.products || [])) // Gán giá trị mặc định nếu không có dữ liệu
+      .then(response => setNewProducts(response.data.products || []))
       .catch(error => console.error('Error fetching new products:', error));
   
     axios.get('http://localhost:3000/api/v1/getproductbycategory/1')
@@ -27,10 +27,9 @@ const ProductList = () => {
       .catch(error => console.error('Error fetching accessory products:', error));
   }, []);
   
-
   const renderProduct = (products) => {
     if (!products.length) {
-      return <p>Không có sản phẩm nào</p>;
+      return <h1>Không có sản phẩm nào</h1>;
     }
     return products.map((product) => (
       <div className={styles.productProduct} key={product.masp}>
@@ -51,7 +50,7 @@ const ProductList = () => {
         </Link>
       </div>
     ));
-  };  
+  };
 
   return (
     <div>
