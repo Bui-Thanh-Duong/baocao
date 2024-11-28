@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import styles from '../css/header/header.module.css';
 import { Link } from 'react-router-dom';
 import { Context } from './Context';
-import { logout } from './userService';
 import CategoryDropdown from './CategoryDropdown';
 import stylesmenu from '../css/header/menu.module.css';
 
@@ -18,9 +17,15 @@ const Header = ({ categorys = []}) => {
   const handleLogout = async (e) => {
     e.preventDefault();
     console.log("Logout function triggered!");
-      await logout();
-      logoutContext();
+  
+    // Xóa thông tin trong localStorage
+    localStorage.removeItem('user');
+    
+    // Gọi logoutContext để cập nhật trạng thái người dùng trong context
+    logoutContext();
   };
+  
+  
 
   return (
     <div className={`${styles.headerContainer}`}>
@@ -87,23 +92,23 @@ const Header = ({ categorys = []}) => {
               </Link>
             </li>
           )}
-            <li className="nav-item">
-              {user?.auth ? (
-                <div className={styles.headerInfor}>
-                  <div className={styles.headerHiUser}><span>Xin chào, {user.username}</span></div>
-                  <span
-                    className={styles.logoutBtn}
-                    onClick={handleLogout}  // Pass the function reference
-                  >
-                    <i className="fa-solid fa-right-from-bracket"></i> Đăng xuất
-                  </span>
-                </div>
-              ) : (
-                <Link to="/login" className={`${styles.loginBtn} btn btn-outline-light`}>
-                  <i className="fas fa-sign-in-alt"></i> Đăng nhập
-                </Link>
-              )}
-            </li>
+<li className="nav-item">
+  {user?.auth ? (
+    <div className={styles.headerInfor}>
+      <div className={styles.headerHiUser}><span>Xin chào, {user.username}</span></div>
+      <span
+        className={styles.logoutBtn}
+        onClick={handleLogout}
+      >
+        <i className="fa-solid fa-right-from-bracket"></i> Đăng xuất
+      </span>
+    </div>
+  ) : (
+    <Link to="/login" className={`${styles.loginBtn} btn btn-outline-light`}>
+      <i className="fas fa-sign-in-alt"></i> Đăng nhập
+    </Link>
+  )}
+</li>
           </ul>
         </div>
       </nav>

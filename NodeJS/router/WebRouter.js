@@ -10,7 +10,7 @@ const router = express.Router();
 
 const initWebRoute = (app) => {
   // Home routes
-  router.get('/', adminMiddleware, HomeController.getHomePage);
+  router.get('/', HomeController.getHomePage);
 
   // Login routes
   router.get('/login', getLoginPage);
@@ -45,15 +45,12 @@ const initWebRoute = (app) => {
   router.get('/createnewuser/', adminMiddleware, createUser);  // Create new user form
   router.post('/createnewuser/', adminMiddleware, createUser);  // Insert new user
 
-  // Route to fetch session info (for testing or debugging)
   router.get('/get-session', (req, res) => {
     res.send(req.session);
   });
 
-  // Apply the session middleware
   app.use(sessionMiddleware);
 
-  // Return the app use with the defined routes
   return app.use('/', router);
 };
 

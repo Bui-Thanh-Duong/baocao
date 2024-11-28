@@ -59,14 +59,13 @@ const getLogoutPage = (req, res) => {
 };
 
 const adminMiddleware = (req, res, next) => {
-    // Kiểm tra xem user có phải là admin hay không
     if (!req.session.user) {
-        return res.redirect('/login'); // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+        return res.redirect('/login');
     }
     if (req.session.user.role !== 'admin') {
-        return res.status(403).send('Access denied'); // Trả về lỗi 403 nếu không phải là admin
+        return res.status(403).send('Access denied');
     }
-    next(); // Tiếp tục nếu là admin
+    next();
 };
 
 const createJWT = (payload) => {
